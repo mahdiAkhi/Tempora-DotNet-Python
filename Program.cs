@@ -26,6 +26,8 @@ await worker.ExecuteAsync(async () =>
             channel="Test Channel", 
             subject="This is the test slack notification"
             },
+            // Note that the ID for each wokflow execution should be unique if you want to run multiple workflow
+            // You can use receiver+Media as the workflow execution ID
         new() { ID = "MessagingWorkflow", TaskQueue = "MessagingTaskQueue" });
 
     Console.WriteLine("Workflow result: {0}", result);
@@ -38,8 +40,24 @@ namespace Temporalio.Samples.ActivityWorker
         // Our activity implementation
         [Activity("SlackActivity")]
         public static string Slack(Message message){
-            return $"Body: {message.body}, receiver: {message.receivers.ToString}, channel: {message.channel}";
-        }
+                return "This is a Slack message to: {message.receivers.ToString()}.\n"+
+                        $"Body: {message.body} \n", 
+                        $"Sends from the {message.channel} channel";
+                        }
+
+        [Activity("EmailActivity")]
+        public static string Email(Message message){
+                return "This is an Email to: {message.receivers.ToString()}.\n"+
+                        $"Body: {message.body} \n", 
+                        $"Sends from the {message.channel} channel";
+                        }
+
+        [Activity("SmsActivity")]
+        public static string Sms(Message message){
+                return "This is a SMS to: {message.receivers.ToString()}.\n"+
+                        $"Body: {message.body} \n", 
+                        $"Sends from the {message.channel} channel";
+                        }
     }
 
     // Workflow definition of the workflow implementation in Go
