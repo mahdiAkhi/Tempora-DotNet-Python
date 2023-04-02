@@ -23,7 +23,7 @@ We are going to implement a messagin system using Temporal. This system sends th
 
 The messaging services are writen in C#(.NET). We don't want to implement the complete logic of these services. we just have three functions(service) like below to send email, SMS, or Slack message.
 
-```
+```csharp
  public static string Email(Message message){
             return "This is an email to: {message.receivers.ToString()}.\n"+
                   $"Body: {message.body} \n", 
@@ -40,7 +40,8 @@ public static string Slack(Message message){
             return "This is a Slack message to: {message.receivers.ToString()}.\n"+
                   $"Body: {message.body} \n", 
                   $"Sends from the {message.channel} channel";
-        }```
+        }
+```
         
 We know for sending messages we need to call a third-party service(API call). This can fail due to lots of reasons such as network issues, API token expiration, etc. 
 Also, calling third-party services using API always is a time-consuming statement. Imagine you need to send both email and SMS for new users and you have an internal Slack channel that is used to notify the sales team of new user registers. In such a scenario your system sends three messages and needs time to get a successful response from the APIs. What happens if one of these messages fails? How do you try to resend it? How many times do you want to try? if you have more messages to send, how much time is spent to complete a user registration?
