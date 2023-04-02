@@ -25,22 +25,19 @@ The messaging services are writen in C#(.NET). We don't want to implement the co
 
 ```csharp
  public static string Email(Message message){
-            return "This is an email to: {message.receivers.ToString()}.\n"+
-                  $"Body: {message.body} \n", 
-                  $"Sends from the {message.channel} channel";
-        }
+        return "This is an email to: {message.receivers.ToString()}.\n"+
+              $"Body: {message.body} \n", 
+              $"Sends from the {message.channel} channel";}
         
 public static string SMS(Message message){
-            return "This is a SMS to: {message.receivers.ToString()}.\n"+
-                  $"Body: {message.body} \n", 
-                  $"Sends from the {message.channel} channel";
-        }
+       return "This is a SMS to: {message.receivers.ToString()}.\n"+
+             $"Body: {message.body} \n", 
+             $"Sends from the {message.channel} channel";}
         
 public static string Slack(Message message){
-            return "This is a Slack message to: {message.receivers.ToString()}.\n"+
-                  $"Body: {message.body} \n", 
-                  $"Sends from the {message.channel} channel";
-        }
+       return "This is a Slack message to: {message.receivers.ToString()}.\n"+
+             $"Body: {message.body} \n", 
+             $"Sends from the {message.channel} channel";}
 ```
         
 We know for sending messages we need to call a third-party service(API call). This can fail due to lots of reasons such as network issues, API token expiration, etc. 
@@ -52,7 +49,7 @@ To address this issues we can use Temporal.
 - It guarantees that the activities run till they ended successfully. Therefore, we can define different policies to handle task failures.
 - Run the services asynchronously.
 
-## Design System using Temporal
+## Temporal Concepts
 In this section we are going to design our messaging system using Temporal. First of all, we need to learn the key concepts and components of the Temporal. Here we go!
 
 ### Workflow
@@ -63,5 +60,13 @@ Unfortunately, the current version of the [dotnet SDK](https://github.com/tempor
 ### Activity
 A workflow is a chain of one or more activities. Activities are individual tasks(services) that are executed by the workflow. They are typically short-lived, stateless, and perform a specific action such as reading from a database or sending an email. Activities are functions that encapsulate logic that can potentially fail, such as network calls, file operations, or random number generation. Activities are invoked in Workflow code and the Server coordinates with the application to execute them. The current version of [dotnet SDK](https://github.com/temporalio/sdk-dotnet) supports the activity.
 
+You can find more about the Temporal concepts and component in [Temporal official docs](https://docs.temporal.io/workflows). Also, You can see many different examples in different scenarios in the [Python code samples](https://github.com/temporalio/samples-python) to get more familiar with Temporal components. Also, the [dotnet code samples](https://github.com/temporalio/samples-dotnet) are here.
 
-You can see many different examples in different scenarios in the [Python code samples](https://github.com/temporalio/samples-python) to get more familiar with Temporal components. Also, the [dotnet code samples](https://github.com/temporalio/samples-dotnet) are here.
+## Design System using Temporal
+Now you got familiar with Temporal and its key concepts we need to design our system using Temporal. 
+We have just one workflow and we name it `MessagingWorkflow`. Also, we have three activities, which are our messaging services(Email, SMS, and Slack).
+You can see the activity and workflow design in below figure.
+![System design for messaging system using Tempal](https://github.com/mahdiAkhi/Tempora-DotNet-Python/blog/design.png)
+
+Note that our workflow isn't a orderly workflow, we can start this workflow with any one of the activities.
+This system is implemented in this repo.
