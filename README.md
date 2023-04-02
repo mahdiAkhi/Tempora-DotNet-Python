@@ -66,8 +66,10 @@ You can find more about the Temporal concepts and component in [Temporal officia
 Now you got familiar with Temporal and its key concepts we need to design our system using Temporal. 
 We have just one workflow and we name it `MessagingWorkflow`. Also, we have three activities, which are our messaging services(Email, SMS, and Slack).
 You can see the activity and workflow design in the below figure.
+<p align="center">
+ <img src="https://github.com/mahdiAkhi/Tempora-DotNet-Python/blob/main/blob/design.png" />
+</p>
 
-![System design for messaging system using Tempal](https://github.com/mahdiAkhi/Tempora-DotNet-Python/blob/design.png)
 
 Note that our workflow isn't a orderly workflow, we can start this workflow with any one of the activities.
 This system is implemented in this repo.
