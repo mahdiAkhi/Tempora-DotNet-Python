@@ -40,21 +40,21 @@ namespace Temporalio.Samples.ActivityWorker
         // Our activity implementation
         [Activity("SlackActivity")]
         public static string Slack(Message message){
-                return "This is a Slack message to: {message.receivers.ToString()}.\n"+
+                return  $"This is a Slack message to: {message.receivers.ToString()}.\n"+
                         $"Body: {message.body} \n", 
                         $"Sends from the {message.channel} channel";
                         }
 
         [Activity("EmailActivity")]
         public static string Email(Message message){
-                return "This is an Email to: {message.receivers.ToString()}.\n"+
+                return  $"This is an Email to: {message.receivers.ToString()}.\n"+
                         $"Body: {message.body} \n", 
                         $"Sends from the {message.channel} channel";
                         }
 
         [Activity("SmsActivity")]
         public static string Sms(Message message){
-                return "This is a SMS to: {message.receivers.ToString()}.\n"+
+                return  $"This is a SMS to: {message.receivers.ToString()}.\n"+
                         $"Body: {message.body} \n", 
                         $"Sends from the {message.channel} channel";
                         }
