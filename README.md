@@ -25,17 +25,17 @@ The messaging services are writen in C#(.NET). We don't want to implement the co
 
 ```csharp
  public static string Email(Message message){
-        return "This is an email to: {message.receivers.ToString()}.\n"+
+        return $"This is an email to: {message.receivers.ToString()}.\n"+
               $"Body: {message.body} \n", 
               $"Sends from the {message.channel} channel";}
         
 public static string SMS(Message message){
-       return "This is a SMS to: {message.receivers.ToString()}.\n"+
+       return $"This is a SMS to: {message.receivers.ToString()}.\n"+
              $"Body: {message.body} \n", 
              $"Sends from the {message.channel} channel";}
         
 public static string Slack(Message message){
-       return "This is a Slack message to: {message.receivers.ToString()}.\n"+
+       return $"This is a Slack message to: {message.receivers.ToString()}.\n"+
              $"Body: {message.body} \n", 
              $"Sends from the {message.channel} channel";}
 ```
